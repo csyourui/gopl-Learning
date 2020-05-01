@@ -65,6 +65,17 @@ func testCh4Append() {
 	fmt.Println(a)      // "[1 2 3 4 5 6 1 2 3 4 5 6]"
 }
 
+//gopl/ch4/nonempty
+func testCh4Nonempty() {
+	data := []string{"one", "", "three"}
+	fmt.Printf("%q\n", ch4.Nonempty(data)) // `["one" "three"]`
+	fmt.Printf("%q\n", data)               // `["one" "three" "three"]`
+}
+
+//gopl/ch4/dedup
+func testCh4Dedup() {
+	ch4.Dedup()
+}
 func main() {
 	// testCh3Comma()
 	// testCh3Basename()
@@ -72,5 +83,7 @@ func main() {
 	// testCh3Netflag()
 	// testCh4Sha256()
 	// testCh4Rev()
-	testCh4Append()
+	// testCh4Append()
+	// testCh4Nonempty()
+	testCh4Dedup()
 }
