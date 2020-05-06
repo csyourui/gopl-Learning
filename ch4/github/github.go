@@ -12,12 +12,16 @@ import (
 	"time"
 )
 
+//IssuesURL Api of github
 const IssuesURL = "https://api.github.com/search/issues"
 
+//IssuesSearchResult sturuct of result
 type IssuesSearchResult struct {
 	TotalCount int `json:"total_count"`
 	Items      []*Issue
 }
+
+//Issue sturuct of Issue
 type Issue struct {
 	Number    int
 	HTMLURL   string `json:"html_url"`
@@ -27,11 +31,15 @@ type Issue struct {
 	CreatedAt time.Time `json:"created_at"`
 	Body      string
 }
+
+//User struct of user
 type User struct {
 	Login   string
 	HTMLURL string `json:"html_url"`
 }
 
+//SearchIssues get issures url
+//return IssuesSearchResult
 func SearchIssues(terms []string) (*IssuesSearchResult, error) {
 	q := url.QueryEscape(strings.Join(terms, " "))
 	resp, err := http.Get(IssuesURL + "?q=" + q)

@@ -2,16 +2,21 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+
+	"github.com/gocolly/colly"
 )
 
 func main() {
-	http.HandleFunc("/", handler) // each request calls handler
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
-}
+	c := colly.NewCollector()
 
-// handler echoes the Path component of the request URL r.
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+	// Find and visit all links
+	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+		e.Request.Visit(e.Attr("href"))
+	})
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting", r.URL)
+	})
+
+	c.Visit("http://www.taobao.com/")
 }
